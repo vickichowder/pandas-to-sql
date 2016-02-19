@@ -16,11 +16,7 @@ def tosql(df, *args, **kargs):
         t = threading.Thread(target=lambda: df.iloc[INITIAL_CHUNK+x*CHUNKSIZE:INITIAL_CHUNK+(x+1)*CHUNKSIZE, :].to_sql(*args, **kargs))
         t.start()
         workers.append(t)
-    try:
-        print('total number of threads:', x, 'for', args[0])
-        df.iloc[INITIAL_CHUNK+(x+1)*CHUNKSIZE:, :].to_sql(*args, **kargs)
-    except UnboundLocalError as e:
-        print('-- unbound local error --', e)
-        pass
+    print('total number of threads:', x, 'for', args[0])
+    df.iloc[INITIAL_CHUNK+(x+1)*CHUNKSIZE:, :].to_sql(*args, **kargs)
     [t.join() for t in workers]
     print('added data:', len(df), 'to', args[0])
