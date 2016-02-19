@@ -1,2 +1,2 @@
-# pandas-to-sql
-Use multithreading to insert into db table when dataframe is too large
+# Multithreading to_sql
+Wraps pandas to_sql to allow multithreading when data is larger than chunksize.
